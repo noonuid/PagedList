@@ -25,7 +25,12 @@ namespace PagedList.Mvc
 				li.AddCssClass(@class);
 			if (options.FunctionToTransformEachPageLink != null)
 				return options.FunctionToTransformEachPageLink(li, inner);
-			li.InnerHtml = inner.ToString();
+
+            //新增：将AElementClasses中的样式添加到翻页链接中
+            foreach (var c in options.AElementClasses ?? Enumerable.Empty<string>())
+                inner.AddCssClass(c);
+
+            li.InnerHtml = inner.ToString();
 			return li;
 		}
 
